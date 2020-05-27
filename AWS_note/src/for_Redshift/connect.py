@@ -15,13 +15,13 @@ class RedshiftConnector:
         cursor.close()
         return fetch_all
 
-    def get_connect_info(self):
+    def get_connect_info(self, host, port, user, database, password):
         return {
-            "host": self.parameter_fetcher.fetch_parameters('/datalake/redshift/host'),
-            "port": self.parameter_fetcher.fetch_parameters('/datalake/redshift/port'),
-            "user": self.parameter_fetcher.fetch_parameters('/datalake/redshift/username'),
-            "database": self.parameter_fetcher.fetch_parameters('/datalake/redshift/database'),
-            "password": self.parameter_fetcher.fetch_parameters('/datalake/redshift/password')
+            "host": self.parameter_fetcher.fetch_parameters(host),
+            "port": self.parameter_fetcher.fetch_parameters(port),
+            "user": self.parameter_fetcher.fetch_parameters(user),
+            "database": self.parameter_fetcher.fetch_parameters(database),
+            "password": self.parameter_fetcher.fetch_parameters(password)
         }
 
     def connect(self):
