@@ -1,6 +1,6 @@
 import psycopg2
 
-from src import parameter_fetcher
+from ..authentication import parameter_fetcher
 
 
 class RedshiftConnector:
