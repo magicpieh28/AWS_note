@@ -3,9 +3,7 @@ import pyarrow as pa
 from pathlib import Path
 import pyarrow.parquet as pq
 
-# from . import system_data_dir
-system_data_dir = Path.home() / 'data'
-system_data_dir.mkdir(parents=True, exist_ok=True)
+from . import system_data_dir
 
 
 def csv2parquet(reformed_csv: Path, parquet_file: Path) -> None :
