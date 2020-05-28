@@ -3,12 +3,14 @@ import pyarrow as pa
 from pathlib import Path
 import pyarrow.parquet as pq
 
-from . import system_data_dir
+# from . import system_data_dir
+system_data_dir = Path.home() / 'data'
+system_data_dir.mkdir(parents=True, exist_ok=True)
 
 
-def csv2parquet(reformed_csv: Path, parquet_file: Path) -> None :
+def csv2parquet(reformed_csv: Path, parquet_file: Path) -> None:
     dataframe = pd.read_csv(reformed_csv)
-    table = pa.Table.from_pandas(df=dataframe)
+    table = pa.Table.from_pandas(df=dataframe, preserve_index=False)
     pq.write_table(table, parquet_file)
 
 
@@ -21,5 +23,5 @@ def read_parquet(parquet_file: Path) -> None:
 if __name__ == '__main__':
     reformed_csv = system_data_dir / 'refomed_tag_csv.csv'
     parquet_file = system_data_dir / 'editorial_part_tags.pq'
-    # csv2parquet(reformed_csv, parquet_file)
+    csv2parquet(reformed_csv, parquet_file)
     read_parquet(parquet_file)
