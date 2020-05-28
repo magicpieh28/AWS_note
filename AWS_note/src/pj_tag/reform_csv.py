@@ -86,7 +86,6 @@ if __name__ == '__main__':
     #         print(standardize_empty_column(tag[1]))
     #     print('\n')
 
-    # listed_dict_tags = [('5ジャンル', 'NewsPicks Business'), ('カテゴリ', 'ビジネス'), ('連載タイプ', '特集A'), ('記事タイプ', '記事'), ('地域', ''), ('tag1（業界）\n※SPEEDA参考', '総合商社'), ('tag2（企業名）', '‐'), ('tag2（特別単語）\n※カメリオの結果から特出すべき固有名詞', '総合商社,株式市場,合コン市場,投資,リターン'), ('tag3（登場人物）', ''), ('著者', ''), ('tag4\n※NPっぽいタグ', '')]
     # split_multi_tags(listed_dict_tags)
 
     build_news_tag(raw_tag_csv, 'reformed_tag_csv.csv', 18, (22, 32))
