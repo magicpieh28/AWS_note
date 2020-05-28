@@ -4,8 +4,6 @@ from typing import List, Dict, OrderedDict, Tuple
 
 from . import system_data_dir
 
-raw_tag_csv = system_data_dir / 'editorial_part_tag_project.csv'
-
 
 def arrange_tag_type(tag: str) -> str:
     return tag.replace('\n', ' ')
@@ -15,9 +13,13 @@ def standardize_empty_column(tag: str) -> str:
     return tag.replace('-', '')
 
 
+def arrange_split_point(listed_dict_tags: List[Tuple[str, str]]) -> List[Tuple[str, str]]:
+    return [(tag_type, tag.replace(', ', ',')) for tag_type, tag in listed_dict_tags]
+
+
 def select_column(dict_row: OrderedDict) -> Tuple[List, List]:
     listed_dict_row = list(dict_row.items())
-    return listed_dict_row[18], listed_dict_row[22:33]
+    return listed_dict_row[18], arrange_split_point(listed_dict_row[22:33])
 
 
 def read_csv(raw_tag_csv: Path) -> Tuple[List, List]:
@@ -32,6 +34,7 @@ def split_multi_tags(listed_dict_tags: List) -> List[Tuple[str, str]]:
         i: [(tag_type, split_tag) for split_tag in tag.split(',') if split_tag != '']
         for i, (tag_type, tag) in enumerate(listed_dict_tags) if len(tag.split(',')) > 1 for split_tag in tag.split(',')
     }
+    print(inserted_list_dict)
 
     next_insert_start_point = 0
     if len(inserted_list_dict) > 0:
@@ -41,7 +44,7 @@ def split_multi_tags(listed_dict_tags: List) -> List[Tuple[str, str]]:
             for i in range(len(multi_tag_list)):
                 insert_point = insert_start_idx + i
                 if idx != 0:
-                    insert_point = insert_point + next_insert_start_point
+                    insert_point = insert_start_idx + next_insert_start_point
                 listed_dict_tags.insert(insert_point, multi_tag_list[i])
 
                 if i != len(multi_tag_list) - 1:
@@ -69,6 +72,8 @@ def build_news_tag(raw_tag_csv: Path, reformed_file_name: str) -> None:
 
 
 if __name__ == '__main__':
+    raw_tag_csv = system_data_dir / 'editorial_part_tag_project.csv'
+
     # for news_id, tags in read_csv(raw_tag_csv):
     #     print(tags)
     #     for tag in tags:
